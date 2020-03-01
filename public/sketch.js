@@ -58,7 +58,7 @@ async function predict() {
   msg.style.color = "#DB73A8";
   const circle = prediction[0];
   if (circle.probability.toFixed(2) > 0.9) {
-    msg.innerHTML = "ちゃんとポーズが取れてえらい！！！";
+    msg.innerHTML = "同じポーズが取れてえらい！！！";
   } else {
     msg.innerHTML = "";
   }
