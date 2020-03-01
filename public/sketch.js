@@ -16,21 +16,30 @@ async function init() {
   maxPredictions = model.getTotalClasses();
 
   // Convenience function to setup a webcam
-  const size = 200;
+  const w = window.parent.screen.width / 4;
+  const h = window.parent.screen.height / 4;
   const flip = true; // whether to flip the webcam
-  webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
+  webcam = new tmPose.Webcam(w, h, flip); // width, height, flip
   await webcam.setup(); // request access to the webcam
   await webcam.play();
   window.requestAnimationFrame(loop);
 
   // append/get elements to the DOM
   const canvas = document.getElementById("canvas");
-  canvas.width = size; canvas.height = size;
+  canvas.width = w; canvas.height = h;
   ctx = canvas.getContext("2d");
   labelContainer = document.getElementById("label-container");
   for (let i = 0; i < maxPredictions; i++) { // and class labels
     labelContainer.appendChild(document.createElement("div"));
   }
+
+  // example img
+  const img = document.getElementById("img-example");
+  img.setAttribute("src", "./img/circle-woman.jpg");
+  img.setAttribute("width", w);
+  img.setAttribute("height", h);
+  const msg = document.getElementById("order-message");
+  msg.innerHTML = "同じポーズを取りなさい！！";
 }
 
 async function loop(timestamp) {
@@ -45,6 +54,14 @@ async function predict() {
   const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
   // Prediction 2: run input through teachable machine classification model
   const prediction = await model.predict(posenetOutput);
+  const msg = document.getElementById("correct-message");
+  msg.style.color = "#DB73A8";
+  const circle = prediction[0];
+  if (circle.probability.toFixed(2) > 0.9) {
+    msg.innerHTML = "ちゃんとポーズが取れてえらい！！！";
+  } else {
+    msg.innerHTML = "";
+  }
 
   for (let i = 0; i < maxPredictions; i++) {
     const classPrediction =
@@ -67,3 +84,5 @@ function drawPose(pose) {
     }
   }
 }
+
+init();
