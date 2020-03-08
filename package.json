@@ -1,0 +1,28 @@
+{
+  "name": "livefit",
+  "version": "1.0.0",
+  "description": "service url: https://livefit-yorisilo.netlify.com",
+  "main": "public/sketch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yorisilo/livefit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yorisilo/livefit/issues"
+  },
+  "homepage": "https://github.com/yorisilo/livefit#readme",
+  "dependencies": {
+    "@teachablemachine/pose": "^0.8.6",
+    "@tensorflow/tfjs": "^1.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  }
+}
