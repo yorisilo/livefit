@@ -40,7 +40,9 @@ async function init() {
   ctx = canvas.getContext('2d');
   labelContainer = document.getElementById('label-container');
   for (let i = 0; i < maxPredictions; i++) { // and class labels
-    labelContainer.appendChild(document.createElement('div'));
+    let valueElement = document.createElement('div');
+    valueElement.className = 'detected-values';
+    labelContainer.appendChild(valueElement);
   }
 
   // example img
@@ -48,8 +50,10 @@ async function init() {
   img.setAttribute('src', './img/circle-woman.jpg');
   img.setAttribute('width', w);
   img.setAttribute('height', h);
+  const title = document.getElementById('title-message');
+  title.innerHTML = 'LIVE FIT!';
   const msg = document.getElementById('order-message');
-  msg.innerHTML = '同じポーズを取りなさい！！';
+  msg.innerHTML = '左の写真と同じポーズをとってみよう！';
 }
 
 async function loop(timestamp) {
@@ -65,12 +69,13 @@ async function predict() {
   // Prediction 2: run input through teachable machine classification model
   const prediction = await model.predict(posenetOutput);
   const msg = document.getElementById('correct-message');
-  msg.style.color = '#DB73A8';
   const circle = prediction[0];
   if (circle.probability.toFixed(2) > 0.9) {
-    msg.innerHTML = '同じポーズが取れてえらい！！！';
+    msg.style.backgroundColor = '#DB6273';
+    msg.innerHTML = 'それそれ！そのポーズ！！！';
   } else {
-    msg.innerHTML = '';
+    msg.style.backgroundColor = '#41B6CA';
+    msg.innerHTML = 'ちょっと違うかも・・・';
   }
 
   for (let i = 0; i < maxPredictions; i++) {
