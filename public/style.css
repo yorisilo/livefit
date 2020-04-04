@@ -1,0 +1,33 @@
+body {
+    text-align: center;
+}
+#title-message {
+    color: #DB6273;
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 1.5rem;
+}
+#order-message {
+    padding-bottom: 1.5rem;
+}
+.posing {
+    margin-bottom: 1.0rem;
+}
+.posing-content {
+    display: inline-block;
+    padding: 1.0rem;
+    vertical-align: top;
+}
+.detected-values {
+    display: inline-block;
+    padding: 0.5rem;
+    vertical-align: top;
+}
+#correct-message {
+    color: white;
+    padding: 0.25rem;
+    border-radius: 15px;
+    width: 700px;
+    display: block;
+    margin: auto;
+}
