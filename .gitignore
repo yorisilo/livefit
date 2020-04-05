@@ -2,4 +2,3 @@
 node_modules/
 .envrc
 .DS_Store
-public/.DS_Store

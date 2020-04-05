@@ -8,7 +8,7 @@
 // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
 // the link to your model provided by Teachable Machine export panel
-const URL = 'https://teachablemachine.withgoogle.com/models/rShjTwWj/';
+const URL = 'https://teachablemachine.withgoogle.com/models/wMgGXgIGv/';
 let model;
 let webcam;
 let ctx;
@@ -40,14 +40,14 @@ async function init() {
   ctx = canvas.getContext('2d');
   labelContainer = document.getElementById('label-container');
   for (let i = 0; i < maxPredictions; i++) { // and class labels
-    let valueElement = document.createElement('div');
+    const valueElement = document.createElement('div');
     valueElement.className = 'detected-values';
     labelContainer.appendChild(valueElement);
   }
 
   // example img
   const img = document.getElementById('img-example');
-  img.setAttribute('src', './img/circle-woman.jpg');
+  img.setAttribute('src', './img/pose_heart_hand_woman.png');
   img.setAttribute('width', w);
   img.setAttribute('height', h);
   const title = document.getElementById('title-message');
