@@ -38,7 +38,7 @@ async function init() {
   window.requestAnimationFrame(loop);
 
   // append/get elements to the DOM
-  const canvas = document.getElementById('canvas');
+  const canvas = document.getElementById('webcam-container').appendChild(webcam.canvas);
   canvas.width = w; canvas.height = h;
   ctx = canvas.getContext('2d');
   labelContainer = document.getElementById('label-container');
@@ -66,11 +66,8 @@ async function loop(timestamp) {
 }
 
 async function predict() {
-  // Prediction #1: run input through posenet
-  // estimatePose can take in an image, video or canvas html element
-  const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
-  // Prediction 2: run input through teachable machine classification model
-  const prediction = await model.predict(posenetOutput);
+  // predict can take in an image, video or canvas html element
+  const prediction = await model.predict(webcam.canvas);
   const msg = document.getElementById('correct-message');
   const heart = prediction[0];
   if (heart.probability.toFixed(2) > 0.9) {
@@ -85,21 +82,7 @@ async function predict() {
     const classPrediction = `${prediction[i].className}: ${prediction[i].probability.toFixed(2)}`;
     labelContainer.childNodes[i].innerHTML = classPrediction;
   }
-
-  // finally draw the poses
-  drawPose(pose);
 }
 
-function drawPose(pose) {
-  if (webcam.canvas) {
-    ctx.drawImage(webcam.canvas, 0, 0);
-    // draw the keypoints and skeleton
-    if (pose) {
-      const minPartConfidence = 0.5;
-      tmImage.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-      tmImage.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
-    }
-  }
-}
 
 init();
