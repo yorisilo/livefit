@@ -8,7 +8,7 @@
 // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
 // the link to your model provided by Teachable Machine export panel
-const URL = 'https://teachablemachine.withgoogle.com/models/wMgGXgIGv/';
+const URL = 'https://teachablemachine.withgoogle.com/models/rShjTwWj/';
 let model;
 let webcam;
 let ctx;
@@ -47,7 +47,7 @@ async function init() {
 
   // example img
   const img = document.getElementById('img-example');
-  img.setAttribute('src', './img/pose_heart_hand_woman.png');
+  img.setAttribute('src', './img/circle-woman.jpg');
   img.setAttribute('width', w);
   img.setAttribute('height', h);
   const title = document.getElementById('title-message');
