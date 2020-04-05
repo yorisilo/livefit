@@ -26,8 +26,8 @@ async function init() {
   maxPredictions = model.getTotalClasses();
 
   // Convenience function to setup a webcam
-  const w = window.parent.screen.width / 4;
-  const h = window.parent.screen.height / 4;
+  const w = window.parent.screen.width / 3;
+  const h = window.parent.screen.height / 3;
   const flip = true; // whether to flip the webcam
   webcam = new tmImage.Webcam(w, h, flip); // width, height, flip
   await webcam.setup(); // request access to the webcam
@@ -66,7 +66,7 @@ async function predict() {
   const prediction = await model.predict(webcam.canvas);
   const heart = prediction[0];
   const msg = document.getElementById('correct-message');
-  if (heart.probability.toFixed(2) > 0.9) {
+  if (heart.probability.toFixed(1) > 0.9) {
     msg.style.backgroundColor = '#DB6273';
     msg.innerHTML = 'それそれ！そのポーズ！！！';
   } else {
