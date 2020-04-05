@@ -64,9 +64,9 @@ async function loop() {
 async function predict() {
   // predict can take in an image, video or canvas html element
   const prediction = await model.predict(webcam.canvas);
-  const heart = prediction[0];
+  const heart = prediction[1];
   const msg = document.getElementById('correct-message');
-  if (heart.probability.toFixed(1) > 0.9) {
+  if (heart.probability.toFixed(2) > 0.9) {
     msg.style.backgroundColor = '#DB6273';
     msg.innerHTML = 'それそれ！そのポーズ！！！';
   } else {
