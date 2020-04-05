@@ -1,3 +1,7 @@
+// import * as tf from '@tensorflow/tfjs';
+// import * as tmPose from '@teachablemachine/pose';
+// import * as tmImage from '@teachablemachine/image';
+
 // More API functions here:
 // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
@@ -22,8 +26,10 @@ async function init() {
   maxPredictions = model.getTotalClasses();
 
   // Convenience function to setup a webcam
+  const w = window.parent.screen.width / 4;
+  const h = window.parent.screen.height / 4;
   const flip = true; // whether to flip the webcam
-  webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+  webcam = new tmImage.Webcam(w, h, flip); // width, height, flip
   await webcam.setup(); // request access to the webcam
   await webcam.play();
   window.requestAnimationFrame(loop);
@@ -32,8 +38,20 @@ async function init() {
   document.getElementById('webcam-container').appendChild(webcam.canvas);
   labelContainer = document.getElementById('label-container');
   for (let i = 0; i < maxPredictions; i++) { // and class labels
-    labelContainer.appendChild(document.createElement('div'));
+    const valueElement = document.createElement('div');
+    valueElement.className = 'detected-values';
+    labelContainer.appendChild(valueElement);
   }
+
+  // example img
+  const img = document.getElementById('img-example');
+  img.setAttribute('src', './img/pose_heart_hand_woman.png');
+  img.setAttribute('width', w);
+  img.setAttribute('height', h);
+  const title = document.getElementById('title-message');
+  title.innerHTML = 'LIVE FIT!';
+  const msg = document.getElementById('order-message');
+  msg.innerHTML = '左の写真と同じポーズをとってみよう！';
 }
 
 async function loop() {
@@ -46,6 +64,15 @@ async function loop() {
 async function predict() {
   // predict can take in an image, video or canvas html element
   const prediction = await model.predict(webcam.canvas);
+  const heart = prediction[0];
+  const msg = document.getElementById('correct-message');
+  if (heart.probability.toFixed(2) > 0.9) {
+    msg.style.backgroundColor = '#DB6273';
+    msg.innerHTML = 'それそれ！そのポーズ！！！';
+  } else {
+    msg.style.backgroundColor = '#41B6CA';
+    msg.innerHTML = 'ちょっと違うかも・・・';
+  }
   for (let i = 0; i < maxPredictions; i++) {
     const classPrediction = `${prediction[i].className}: ${prediction[i].probability.toFixed(2)}`;
     labelContainer.childNodes[i].innerHTML = classPrediction;
