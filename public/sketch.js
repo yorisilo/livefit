@@ -40,7 +40,7 @@ async function init() {
   ctx = canvas.getContext('2d');
   labelContainer = document.getElementById('label-container');
   for (let i = 0; i < maxPredictions; i++) { // and class labels
-    let valueElement = document.createElement('div');
+    const valueElement = document.createElement('div');
     valueElement.className = 'detected-values';
     labelContainer.appendChild(valueElement);
   }
@@ -51,7 +51,7 @@ async function init() {
   img.setAttribute('width', w);
   img.setAttribute('height', h);
   const title = document.getElementById('title-message');
-  title.innerHTML = 'LIVE FIT!';
+  title.innerHTML = 'LIVE Fit!';
   const msg = document.getElementById('order-message');
   msg.innerHTML = '左の写真と同じポーズをとってみよう！';
 }
